@@ -1,0 +1,62 @@
+paths:
+    -   type: setup.py
+        path: cloudify-.*
+        base_directory: version_control/tests/resources/
+        match: version='.*'
+        replace: \d+\.\d+(\.\d+)?(\w\d)?
+        with: "{{ .python_version }}"
+        must_include:
+            - "from setuptools import setup"
+    -   type: setup.py
+        path: cloudify-.*
+        base_directory: version_control/tests/resources/
+        match: cloudify.*==.*
+        replace: \d+\.\d+(\.\d+)?(\w\d)?
+        with: "{{ .python_core_version }}"
+        must_include:
+            - "from setuptools import setup"
+    -   type: setup.py
+        path: cloudify-.*
+        base_directory: version_control/tests/resources/
+        match: cloudify.*plugin==.*
+        replace: \d+\.\d+(\.\d+)?(\w\d)?
+        with: "{{ .python_plugins_version }}"
+        must_include:
+            - "from setuptools import setup"
+    -   type: blueprint.yaml
+        path: cloudify-test-blueprint
+        base_directory: version_control/tests/resources/
+        match: http://www.getcloudify.org/spec/cloudify/.*/types.yaml
+        replace: \d+\.\d+(\.\d+)?(\w+\d+)?
+        with: "{{ .yaml_version }}"
+        must_include:
+            - node_templates
+    -   type: plugin.yaml
+        path: cloudify-test-plugin
+        base_directory: version_control/tests/resources/
+        match: "source: https://github.com/cloudify-cosmo/.*/archive/.*"
+        replace: \d+\.\d+(\.\d+)?(\w+\d+)?
+        with: "{{ .yaml_version }}"
+        must_include:
+            - derived_from
+            - source
+    -   type: VERSION
+        path: cloudify-test-cli
+        base_directory: version_control/tests/resources/
+        match: '"version": ".*"'
+        replace: \d+\.\d+(\.\d+)?(-\w+\d+)?
+        with: "{{ .version_version }}"
+        must_include:
+            - date
+            - commit
+            - version
+            - build
+    -   type: dev-requirements.txt
+        path: cloudify-test-plugin
+        base_directory: version_control/tests/resources/
+        match: "#egg=cloudify-.*==.*"
+        replace: \d+\.\d+(\.\d+)?(\w\d)?
+        with: "{{ .python_core_version }}"
+        must_include:
+            - git
+            - "https://github.com/cloudify-cosmo"

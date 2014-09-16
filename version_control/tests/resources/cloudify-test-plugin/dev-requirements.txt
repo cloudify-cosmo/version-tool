@@ -1,0 +1,2 @@
+-e git+https://github.com/cloudify-cosmo/cloudify-rest-client@master#egg=cloudify-rest-client==1.1m6
+-e git+https://github.com/cloudify-cosmo/cloudify-dsl-parser@master#egg=cloudify-dsl-parser==1.1m6

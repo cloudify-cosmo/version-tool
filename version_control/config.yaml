@@ -1,0 +1,29 @@
+paths:
+    -   type: setup.py
+        path: cloudify-.*
+        base_directory: /repos
+        replace: version='\d+\.\d+(\.\w\d)?'
+        with: "version='{{ .version }}'"
+        validate_before: true
+    -   type: blueprint.yaml
+        path: cloudify-.*
+        base_directory: /repos
+        replace: http://www.getcloudify.org/spec/cloudify/\d+\.\d+(\.\w\d)?/types.yaml
+        with: "http://www.getcloudify.org/spec/cloudify/{{ .version }}/types.yaml"
+        validate_before: true
+    -   type: plugin.yaml
+        path: cloudify-.*
+        base_directory: /repos
+        replace: http://www.getcloudify.org/spec/cloudify/\d+\.\d+(\.\w\d)?/types.yaml
+        with: "http://www.getcloudify.org/spec/cloudify/{{ .version }}/types.yaml"
+        validate_before: true
+    -   type: VERSION
+        path: repex/tests/resources/mock_VERSION
+        base_directory: /repos
+        replace: '"version": "REGEX HERE"',
+        with: '"version": "{{ .version }}"'
+        validate_before: true
+        must_include:
+            - date
+            - commit
+            - version
