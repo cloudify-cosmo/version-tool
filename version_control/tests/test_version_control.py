@@ -13,7 +13,7 @@
 #    * See the License for the specific language governing permissions and
 #    * limitations under the License.
 
-__author__ = 'nir0s'
+__author__ = 'anna'
 
 from repex.repex import import_config
 from repex.logger import init
@@ -26,148 +26,48 @@ from repex.repex import get_all_files
 
 import unittest
 import os
-from testfixtures import log_capture
 import logging
-
+import shutil
+from version_control.version_control import execute
+import filecmp
+import time
 
 TEST_DIR = '{0}/test_dir'.format(os.path.expanduser("~"))
 TEST_FILE_NAME = 'test_file'
 TEST_FILE = TEST_DIR + '/' + TEST_FILE_NAME
-TEST_RESOURCES_DIR = 'repex/tests/resources/'
-TEST_RESOURCES_DIR_PATTERN = 'repex/tests/resource.*'
-MOCK_CONFIG_FILE = os.path.join(TEST_RESOURCES_DIR, 'mock_files.yaml')
-MOCK_CONFIG_MULTIPLE_FILES = os.path.join(TEST_RESOURCES_DIR,
-                                          'mock_multiple_files.yaml')
-MOCK_TEST_FILE = os.path.join(TEST_RESOURCES_DIR, 'mock_VERSION')
-BAD_CONFIG_FILE = os.path.join(TEST_RESOURCES_DIR, 'bad_mock_files.yaml')
-EMPTY_CONFIG_FILE = os.path.join(TEST_RESOURCES_DIR, 'empty_mock_files.yaml')
-
+TEST_DIR = 'version_control/tests/'
+TEST_RESOURCES_DIR = TEST_DIR + 'resources/'
 
 class TestBase(unittest.TestCase):
 
-    @log_capture()
-    def test_set_global_verbosity_level(self, capture):
-        lgr = init(base_level=logging.INFO)
+    def test_version(self):
 
-        _set_global_verbosity_level(is_verbose_output=False)
-        lgr.debug('TEST_LOGGER_OUTPUT')
-        capture.check()
-        lgr.info('TEST_LOGGER_OUTPUT')
-        capture.check(('user', 'INFO', 'TEST_LOGGER_OUTPUT'))
+        test_dirs = os.listdir( TEST_RESOURCES_DIR )
 
-        _set_global_verbosity_level(is_verbose_output=True)
-        lgr.debug('TEST_LOGGER_OUTPUT')
-        capture.check(
-            ('user', 'INFO', 'TEST_LOGGER_OUTPUT'),
-            ('user', 'DEBUG', 'TEST_LOGGER_OUTPUT'))
+        for file in test_dirs:
+            if os.path.isdir(os.path.join(TEST_RESOURCES_DIR, file)) and file.startswith('cloudify-'):
+                print file
 
-    def test_import_config_file(self):
-        outcome = import_config(MOCK_CONFIG_FILE)
-        self.assertEquals(type(outcome), dict)
-        self.assertIn('paths', outcome.keys())
+                input = TEST_RESOURCES_DIR + file + '/input'
+                working_dir = TEST_RESOURCES_DIR + file + '/work-copy'
+                expected_output = TEST_RESOURCES_DIR + file + '/expected-output'
 
-    def test_fail_import_config_file(self):
-        try:
-            import_config('')
-        except RuntimeError as ex:
-            self.assertEquals(str(ex), 'cannot access config file')
+                if not os.path.exists(input):
+                    continue
 
-    def test_import_bad_config_file_mapping(self):
-        try:
-            import_config(BAD_CONFIG_FILE)
-        except Exception as ex:
-            self.assertIn('mapping values are not allowed here', str(ex))
+                deleted = shutil.rmtree(working_dir,ignore_errors=True)
 
-    def test_import_bad_config_file(self):
-        try:
-            import_config(BAD_CONFIG_FILE)
-        except Exception as ex:
-            self.assertIn('mapping values are not allowed here', str(ex))
+                # Copy the input because the files will be changed in place
+                shutil.copytree(input,working_dir)
+                execute("1.2","3.1a5",TEST_RESOURCES_DIR + 'config.yaml',working_dir,verbose=True)
+                res = filecmp.dircmp(working_dir, expected_output)
 
-    def test_iterate_no_config_supplied(self):
-        try:
-            iterate()
-        except TypeError as ex:
-            self.assertIn('takes at least 1 argument', str(ex))
+                try:
+                    self.assertEquals(0,len(res.diff_files))
 
-    def test_iterate_no_files(self):
-        try:
-            iterate(EMPTY_CONFIG_FILE)
-        except RepexError as ex:
-            self.assertEqual(str(ex), 'no paths configured')
-
-    def test_iterate(self):
-        output_file = MOCK_TEST_FILE + '.test'
-        iterate(MOCK_CONFIG_FILE)
-        with open(output_file) as f:
-            self.assertIn('{{ .version }}', f.read())
-        os.remove(output_file)
-
-    def test_iterate_with_vars(self):
-        output_file = MOCK_TEST_FILE + '.test'
-        v = {'version': '3.1.0-m3'}
-        iterate(MOCK_CONFIG_FILE, v)
-        with open(output_file) as f:
-            self.assertIn('3.1.0-m3', f.read())
-        os.remove(output_file)
-
-    def test_iterate_variables_not_dict(self):
-        try:
-            iterate(MOCK_CONFIG_FILE, variables='x')
-        except RuntimeError as ex:
-            self.assertEqual(str(ex), 'variables must be of type dict')
-
-    def test_file_string_not_found(self):
-        p = Repex(MOCK_TEST_FILE, 'NONEXISTING STRING', '', False)
-        self.assertFalse(p.validate_before(must_include=[]))
-
-    def test_file_validation_failed(self):
-        file = {
-            'path': MOCK_TEST_FILE,
-            'replace': 'MISSING_PATTERN',
-            'with': '',
-            'to_file': MOCK_TEST_FILE + '.test',
-            'validate_before': True
-        }
-        try:
-            handle_file(file, verbose=True)
-        except RepexError as ex:
-            self.assertEqual(str(ex), 'prevalidation failed')
-
-    def test_file_no_permissions_to_write_to_file(self):
-        p = Repex(
-            MOCK_TEST_FILE,
-            '3.1.0-m2',
-            '3.1.0-m3',
-            '/mock.test'
-        )
-        try:
-            p.replace()
-        except IOError as ex:
-            self.assertIn('Permission denied', str(ex))
-
-    def test_file_must_include_missing(self):
-        file = {
-            'path': MOCK_TEST_FILE,
-            'replace': '3.1.0-m2',
-            'with': '',
-            'to_file': MOCK_TEST_FILE + '.test',
-            'validate_before': True,
-            'must_include': [
-                'MISSING_INCLUSION'
-            ]
-        }
-        try:
-            handle_file(file, verbose=True)
-        except RepexError as ex:
-            self.assertEqual(str(ex), 'prevalidation failed')
-
-    def test_iterate_multiple_files(self):
-        iterate(MOCK_CONFIG_MULTIPLE_FILES)
-        files = get_all_files(
-            'mock_VERSION', TEST_RESOURCES_DIR_PATTERN, TEST_RESOURCES_DIR)
-        if not files:
-            raise Exception('WHAT?!')
-        # for fl in files:
-        #     with open(fl) as f:
-        #         self.assertIn('3.1.0-m3', f.read())
+                    for sd in res.subdirs.itervalues():
+                       print sd.diff_files
+                       self.assertEquals(0,len(sd.diff_files))
+                except AssertionError:
+                    filecmp.dircmp(working_dir, expected_output).report_full_closure()
+                    raise

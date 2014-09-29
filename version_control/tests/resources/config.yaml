@@ -1,61 +1,69 @@
 paths:
     -   type: setup.py
-        path: cloudify-.*
+        path: .*
         base_directory: version_control/tests/resources/
-        match: version='.*'
-        replace: \d+\.\d+(\.\d+)?(\w\d)?
-        with: "{{ .python_version }}"
+        match: version='(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'
+        replace: version='(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'
+        with: "version='{{ .python_version }}'"
         must_include:
             - "from setuptools import setup"
+
     -   type: setup.py
-        path: cloudify-.*
-        base_directory: version_control/tests/resources/
-        match: cloudify.*==.*
-        replace: \d+\.\d+(\.\d+)?(\w\d)?
-        with: "{{ .python_core_version }}"
-        must_include:
-            - "from setuptools import setup"
-    -   type: setup.py
-        path: cloudify-.*
-        base_directory: version_control/tests/resources/
-        match: cloudify.*plugin==.*
-        replace: \d+\.\d+(\.\d+)?(\w\d)?
+        path: .*
+        match: \'cloudify-plugins-\w(\w+|-)+\w==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)\'
+        replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
         with: "{{ .python_plugins_version }}"
         must_include:
-            - "from setuptools import setup"
+           - "from setuptools import setup"
+           - "install_requires"
+
+#    -   type: setup.py
+#        path: cloudify-.*
+#        base_directory: version_control/tests/resources/
+#        match: \'cloudify-\w(\w+|-)+\w==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)\'
+#        replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
+#        with: "{{ .python_core_version }}"
+#        must_include:
+#            - "from setuptools import setup"
+#            - "install_requires"
+
     -   type: blueprint.yaml
-        path: cloudify-test-blueprint
+        path: .*
         base_directory: version_control/tests/resources/
-        match: http://www.getcloudify.org/spec/cloudify/.*/types.yaml
-        replace: \d+\.\d+(\.\d+)?(\w+\d+)?
+        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w\d+)?)/.+\.yaml
+        replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
         with: "{{ .yaml_version }}"
         must_include:
             - node_templates
+            - imports
+
     -   type: plugin.yaml
-        path: cloudify-test-plugin
+        path: .*
         base_directory: version_control/tests/resources/
-        match: "source: https://github.com/cloudify-cosmo/.*/archive/.*"
-        replace: \d+\.\d+(\.\d+)?(\w+\d+)?
+        match: 'source: https://github.com/cloudify-cosmo/.*/archive/.*(\d+)(\.\d+){1,2}(dev|(\w\d+)?)\.zip'
+        replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
         with: "{{ .yaml_version }}"
         must_include:
             - derived_from
             - source
+
     -   type: VERSION
-        path: cloudify-test-cli
+        path: .*
         base_directory: version_control/tests/resources/
-        match: '"version": ".*"'
-        replace: \d+\.\d+(\.\d+)?(-\w+\d+)?
+        match: '"version": "\d+(\.\d+){1,2}(-m\d+)?"'
+        replace: \d+(\.\d+){1,2}(-m\d+)?
         with: "{{ .version_version }}"
         must_include:
             - date
             - commit
             - version
             - build
+
     -   type: dev-requirements.txt
-        path: cloudify-test-plugin
+        path: .*
         base_directory: version_control/tests/resources/
-        match: "#egg=cloudify-.*==.*"
-        replace: \d+\.\d+(\.\d+)?(\w\d)?
+        match: https\://github\.com/cloudify-cosmo/cloudify-.+#egg=cloudify-.+==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)
+        replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
         with: "{{ .python_core_version }}"
         must_include:
             - git
