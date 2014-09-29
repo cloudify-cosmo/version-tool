@@ -15,22 +15,11 @@
 
 __author__ = 'anna'
 
-from repex.repex import import_config
-from repex.logger import init
-from repex.repex import _set_global_verbosity_level
-from repex.repex import RepexError
-from repex.repex import iterate
-from repex.repex import Repex
-from repex.repex import handle_file
-from repex.repex import get_all_files
-
 import unittest
 import os
-import logging
 import shutil
 from version_control.version_control import execute
 import filecmp
-import time
 
 TEST_DIR = '{0}/test_dir'.format(os.path.expanduser("~"))
 TEST_FILE_NAME = 'test_file'
@@ -38,11 +27,12 @@ TEST_FILE = TEST_DIR + '/' + TEST_FILE_NAME
 TEST_DIR = 'version_control/tests/'
 TEST_RESOURCES_DIR = TEST_DIR + 'resources/'
 
+
 class TestBase(unittest.TestCase):
 
     def test_version(self):
 
-        test_dirs = os.listdir( TEST_RESOURCES_DIR )
+        test_dirs = os.listdir(TEST_RESOURCES_DIR)
 
         for file in test_dirs:
             if os.path.isdir(os.path.join(TEST_RESOURCES_DIR, file)) \
@@ -51,26 +41,27 @@ class TestBase(unittest.TestCase):
 
                 input = TEST_RESOURCES_DIR + file + '/input'
                 working_dir = TEST_RESOURCES_DIR + file + '/work-copy'
-                expected_output = TEST_RESOURCES_DIR + file + '/expected-output'
+                expected_output = \
+                    TEST_RESOURCES_DIR + file + '/expected-output'
 
                 if not os.path.exists(input):
                     continue
 
-                deleted = shutil.rmtree(working_dir,ignore_errors=True)
+                shutil.rmtree(working_dir, ignore_errors=True)
 
                 # Copy the input because the files will be changed in place
-                shutil.copytree(input,working_dir)
-                execute("1.2","3.1a5",
+                shutil.copytree(input, working_dir)
+                execute("1.2", "3.1a5",
                         TEST_RESOURCES_DIR + 'config.yaml',
-                        working_dir,verbose=True)
+                        working_dir, verbose=True)
                 res = filecmp.dircmp(working_dir, expected_output)
 
                 try:
-                    self.assertEquals(0,len(res.diff_files))
+                    self.assertEquals(0, len(res.diff_files))
 
                     for sd in res.subdirs.itervalues():
-                       print sd.diff_files
-                       self.assertEquals(0,len(sd.diff_files))
+                        print sd.diff_files
+                        self.assertEquals(0, len(sd.diff_files))
                 except AssertionError:
                     filecmp.dircmp(working_dir, expected_output)\
                         .report_full_closure()
