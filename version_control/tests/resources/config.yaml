@@ -9,6 +9,16 @@ paths:
             - "from setuptools import setup"
 
     -   type: setup.py
+        path: cloudify-.*
+        base_directory: version_control/tests/resources/
+        match: \'cloudify-\w(\w+|-)+\w==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)\'
+        replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
+        with: "{{ .python_core_version }}"
+        must_include:
+            - "from setuptools import setup"
+            - "install_requires"
+
+    -   type: setup.py
         path: .*
         match: \'cloudify-plugins-\w(\w+|-)+\w==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)\'
         replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
@@ -17,15 +27,6 @@ paths:
            - "from setuptools import setup"
            - "install_requires"
 
-#    -   type: setup.py
-#        path: cloudify-.*
-#        base_directory: version_control/tests/resources/
-#        match: \'cloudify-\w(\w+|-)+\w==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)\'
-#        replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
-#        with: "{{ .python_core_version }}"
-#        must_include:
-#            - "from setuptools import setup"
-#            - "install_requires"
 
     -   type: blueprint.yaml
         path: .*
