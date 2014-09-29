@@ -45,7 +45,8 @@ class TestBase(unittest.TestCase):
         test_dirs = os.listdir( TEST_RESOURCES_DIR )
 
         for file in test_dirs:
-            if os.path.isdir(os.path.join(TEST_RESOURCES_DIR, file)) and file.startswith('cloudify-'):
+            if os.path.isdir(os.path.join(TEST_RESOURCES_DIR, file)) \
+                    and file.startswith('cloudify-'):
                 print file
 
                 input = TEST_RESOURCES_DIR + file + '/input'
@@ -59,7 +60,9 @@ class TestBase(unittest.TestCase):
 
                 # Copy the input because the files will be changed in place
                 shutil.copytree(input,working_dir)
-                execute("1.2","3.1a5",TEST_RESOURCES_DIR + 'config.yaml',working_dir,verbose=True)
+                execute("1.2","3.1a5",
+                        TEST_RESOURCES_DIR + 'config.yaml',
+                        working_dir,verbose=True)
                 res = filecmp.dircmp(working_dir, expected_output)
 
                 try:
@@ -69,5 +72,6 @@ class TestBase(unittest.TestCase):
                        print sd.diff_files
                        self.assertEquals(0,len(sd.diff_files))
                 except AssertionError:
-                    filecmp.dircmp(working_dir, expected_output).report_full_closure()
+                    filecmp.dircmp(working_dir, expected_output)\
+                        .report_full_closure()
                     raise
