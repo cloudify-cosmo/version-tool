@@ -107,7 +107,7 @@ def execute(plugins_version, core_version,
 
     paths = config.get('paths')
     if not paths:
-        raise RepexError('no files configured')
+        raise RepexError('no paths configured in config yaml')
     for p in paths:
         if os.path.isfile(p['path']):
             handle_file(p, variables, verbose=verbose)
