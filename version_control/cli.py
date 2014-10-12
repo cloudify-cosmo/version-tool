@@ -10,8 +10,8 @@ Usage:
 Options:
     -h --help                       Show this screen.
     -p --plugins-version=<string>   Plugins version to update to
-    -c --core-version=<string>   Plugins version to update to
-    -r --prerelease=<string>           Release (i.e rc1, m3, )
+    -c --core-version=<string>      Plugins version to update to
+    -r --prerelease=<string>        Release (i.e rc1, m3, )
     -b --base-dir=<path>            Base directory to look in
     -f --config=<path>              Config file path
     --validate                      Validate after replacement (defaults to true)
