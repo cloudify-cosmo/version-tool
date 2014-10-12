@@ -72,7 +72,9 @@ def execute(plugins_version, core_version,
     # if it's a prerelease, restructure the version pattern
     if prerelease:
         version_version = '{0}-{1}'.format(
-            core_version, prerelease)
+            core_version if core_version.count('.') == '2'
+            else core_version + '.0',
+            prerelease)
         python_plugins_version = '{0}{1}'.format(
             plugins_version, prerelease).replace('m', 'a').replace('rc', 'c')
         python_core_version = '{0}{1}'.format(
@@ -80,7 +82,8 @@ def execute(plugins_version, core_version,
         yaml_version = '{0}{1}'.format(
             plugins_version, prerelease)
     else:
-        version_version = core_version
+        version_version = core_version if core_version.count('.') == '2' \
+            else core_version + '.0',
         python_plugins_version = plugins_version
         python_core_version = core_version
         yaml_version = plugins_version

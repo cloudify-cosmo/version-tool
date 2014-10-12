@@ -6,8 +6,10 @@
 # In addition, an OpenStack floating ip and security group are created and associated with the created vm.
 #
 
+tosca_definitions_version: cloudify_dsl_1_0
+
 imports:
-    - http://www.getcloudify.org/spec/cloudify/1.2/types.yaml
+    - http://www.getcloudify.org/spec/cloudify/1.1m6/types.yaml
     - cloudify-test-plugin/plugin.yaml
 
 node_templates:

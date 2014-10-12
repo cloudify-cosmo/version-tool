@@ -15,20 +15,17 @@
 
 __author__ = 'anna'
 
-import unittest
+import testtools
 import os
 import shutil
 from version_control.version_control import execute
 import filecmp
 
-TEST_DIR = '{0}/test_dir'.format(os.path.expanduser("~"))
-TEST_FILE_NAME = 'test_file'
-TEST_FILE = TEST_DIR + '/' + TEST_FILE_NAME
 TEST_DIR = 'version_control/tests/'
 TEST_RESOURCES_DIR = TEST_DIR + 'resources/'
 
 
-class TestBase(unittest.TestCase):
+class TestBase(testtools.TestCase):
 
     def test_version(self):
 
@@ -51,9 +48,9 @@ class TestBase(unittest.TestCase):
 
                 # Copy the input because the files will be changed in place
                 shutil.copytree(input, working_dir)
-                execute("1.2", "3.1a5",
+                execute("1.1", "3.1",
                         TEST_RESOURCES_DIR + 'config.yaml',
-                        working_dir, verbose=True)
+                        working_dir, 'm6', verbose=True)
                 res = filecmp.dircmp(working_dir, expected_output)
 
                 try:
@@ -66,3 +63,25 @@ class TestBase(unittest.TestCase):
                     filecmp.dircmp(working_dir, expected_output)\
                         .report_full_closure()
                     raise
+
+    def test_illegal_versions(self):
+        ex = self.assertRaises(
+            SystemExit, execute, '1.1', '3.11',
+            TEST_RESOURCES_DIR + 'config.yaml', '', 'm6', verbose=True)
+        self.assertIn('illegal version', str(ex))
+        ex = self.assertRaises(
+            SystemExit, execute, '1', '3.1',
+            TEST_RESOURCES_DIR + 'config.yaml', '', 'm6', verbose=True)
+        self.assertIn('illegal version', str(ex))
+        ex = self.assertRaises(
+            SystemExit, execute, '1.1', '3.1',
+            TEST_RESOURCES_DIR + 'config.yaml', '', 'd6', verbose=True)
+        self.assertIn('illegal version', str(ex))
+        ex = self.assertRaises(
+            SystemExit, execute, '1.1', '3.1',
+            TEST_RESOURCES_DIR + 'config.yaml', '', '6', verbose=True)
+        self.assertIn('illegal version', str(ex))
+        ex = self.assertRaises(
+            SystemExit, execute, '1.1', '3.1.1.1',
+            TEST_RESOURCES_DIR + 'config.yaml', '', 'm6', verbose=True)
+        self.assertIn('illegal version', str(ex))
