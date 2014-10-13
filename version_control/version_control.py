@@ -34,6 +34,26 @@ class ValidateFiles():
         pass
 
 
+class ValidateVersions():
+    def validate_python_version(self, version):
+        pattern = '\d\.\d(\.\d)?((rc|b|c|a)\d+)?$'
+        m = re.match(pattern, version)
+        if not m:
+            sys.exit('illegal python version: {0}'.format(version))
+
+    def validate_version_file_version(self, version):
+        pattern = '\d\.\d\.\d(-(m|rc)\d+)?$'
+        m = re.match(pattern, version)
+        if not m:
+            sys.exit('illegal VERSION file version: {0}'.format(version))
+
+    def validate_yaml_version(self, version):
+        pattern = '\d\.\d(\.\d)?((rc|m|)\d+)?$'
+        m = re.match(pattern, version)
+        if not m:
+            sys.exit('illegal yaml version: {0}'.format(version))
+
+
 def do_validate_files(p):
     validate = ValidateFiles()
     if p['type'] == 'blueprint.yaml':
@@ -89,6 +109,11 @@ def execute(plugins_version, core_version,
         yaml_version = plugins_version
 
     # validate that the versions are matching the allowed pattern
+    # v = ValidateVersions()
+    # v.validate_version_file_version(version_version)
+    # v.validate_python_version(python_plugins_version)
+    # v.validate_python_version(python_core_version)
+    # v.validate_yaml_version(yaml_version)
     _validate_version(version_version)
     _validate_version(python_plugins_version)
     _validate_version(python_core_version)
@@ -118,7 +143,7 @@ def execute(plugins_version, core_version,
                 do_validate_files(p)
         else:
             files = get_all_files(
-                p['type'], p['path'], base_dir, p['excluded'])
+                p['type'], p['path'], base_dir, p.get('excluded', []), verbose)
             for f in files:
                 # apply a version change according to the type of
                 # repo we're dealing with.
