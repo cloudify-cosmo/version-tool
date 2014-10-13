@@ -66,9 +66,15 @@ If the tests pass, the formats will be appended to the `variables` dict used by 
 
 Then, the tool will run and replace whatever is needed.
 
+Specifically for setup.py files, the replacement will be done according to the following directory structure:
+
+- if dir is like `cloudify-.*-plugin` or `cloudify-.*-provider`, it will use the `plugins version` to update the file.
+- elif dir is like `cloudify-.*, it will use the `core version` to update the file.
+
 If validation is requested, specific validations will run for each type of file. So, for instance, when a blueprint.yaml file is handled, the dsl parser will run and verify that the blueprint is valid.
 
 NOTE: since we DO want to validate, it's required for the `type` key to be passed in the config.yaml even if we're only using a single file - in contrast to what's stated in `repex` regarding single files not requiring the `type` key.
+
 
 ### Using the tool from python rather than from the cli
 

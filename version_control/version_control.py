@@ -119,11 +119,11 @@ def execute(plugins_version, core_version,
         else:
             files = get_all_files(p['type'], p['path'], base_dir)
             for f in files:
-                # apply a version changes according to the type of
+                # apply a version change according to the type of
                 # repo we're dealing with.
-                if re.search('cloudify.*plugin', f):
+                if re.search('cloudify-.*-plugin', f):
                     versions['python_version'] = python_plugins_version
-                if re.search('cloudify.*provider', f):
+                elif re.search('cloudify-.*-provider', f):
                     versions['python_version'] = python_plugins_version
                 elif re.search('cloudify-.*', f):
                     versions['python_version'] = python_core_version
