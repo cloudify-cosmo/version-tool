@@ -123,10 +123,13 @@ def execute(plugins_version, core_version,
                 # repo we're dealing with.
                 if re.search('cloudify.*plugin', f):
                     versions['python_version'] = python_plugins_version
+                if re.search('cloudify.*provider', f):
+                    versions['python_version'] = python_plugins_version
                 elif re.search('cloudify-.*', f):
                     versions['python_version'] = python_core_version
                 variables.update(versions)
                 p['path'] = f
+                p['base_directory'] = base_dir
                 handle_file(p, variables, verbose=verbose)
                 if validate:
                     do_validate(p)

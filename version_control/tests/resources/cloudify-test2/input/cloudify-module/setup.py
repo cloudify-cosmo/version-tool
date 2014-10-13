@@ -28,6 +28,7 @@ setup(
     description='Plugin for installing a Cloudify agent on a machine',
     install_requires=[
         'cloudify-plugins-common==3.1b4',
+        'cloudify-script-plugin==1.1b4',
         'fabric==1.8.3',
         'jinja2==2.7.2'
     ],
