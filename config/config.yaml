@@ -1,12 +1,9 @@
 paths:
     -   type: setup.py
-        path: .*
+        path: cloudify-.*
         #base_directory: version_control/tests/resources/
         excluded:
-          - repex
-          - yo-ci
-          - version-tool
-          - packman
+          - cloudify-plugin-template
         match: version=('|")(\d+)(\.\d+){1,2}(dev|(\w\d+)?)('|")
         replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
         with: "{{ .python_version }}"
