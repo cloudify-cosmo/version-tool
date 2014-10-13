@@ -9,7 +9,7 @@ import sys
 # from dsl_parser.parser import DSLParsingException
 
 
-class Validate():
+class ValidateFiles():
     def blueprintyaml(self, blueprint_path):
         # try:
         #     parse_from_path(blueprint_path)
@@ -34,8 +34,8 @@ class Validate():
         pass
 
 
-def do_validate(p):
-    validate = Validate()
+def do_validate_files(p):
+    validate = ValidateFiles()
     if p['type'] == 'blueprint.yaml':
         validate.blueprintyaml(p['path'])
     elif p['type'] == 'setup.py':
@@ -115,9 +115,10 @@ def execute(plugins_version, core_version,
         if os.path.isfile(p['path']):
             handle_file(p, variables, verbose=verbose)
             if validate:
-                do_validate(p)
+                do_validate_files(p)
         else:
-            files = get_all_files(p['type'], p['path'], base_dir)
+            files = get_all_files(
+                p['type'], p['path'], base_dir, p['excluded'])
             for f in files:
                 # apply a version change according to the type of
                 # repo we're dealing with.
@@ -132,4 +133,4 @@ def execute(plugins_version, core_version,
                 p['base_directory'] = base_dir
                 handle_file(p, variables, verbose=verbose)
                 if validate:
-                    do_validate(p)
+                    do_validate_files(p)
