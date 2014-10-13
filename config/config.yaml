@@ -2,8 +2,8 @@ paths:
     -   type: setup.py
         path: .*
         base_directory: version_control/tests/resources/
-        match: version='(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'
-        replace: version='(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'
+        match: version=('|")(\d+)(\.\d+){1,2}(dev|(\w\d+)?)('|")
+        replace: version=('|")(\d+)(\.\d+){1,2}(dev|(\w\d+)?)('|")
         with: "version='{{ .python_version }}'"
         must_include:
             - "from setuptools import setup"
@@ -11,7 +11,7 @@ paths:
     -   type: setup.py
         path: cloudify-.*
         base_directory: version_control/tests/resources/
-        match: \'cloudify-\w(\w+|-)+\w==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)\'
+        match: ('|")cloudify-\w(\w+|-)+\w==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)('|")
         replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
         with: "{{ .python_core_version }}"
         must_include:
@@ -20,7 +20,8 @@ paths:
 
     -   type: setup.py
         path: .*
-        match: \'cloudify-plugins-\w(\w+|-)+\w==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)\'
+        base_directory: version_control/tests/resources/
+        match: ('|")cloudify-plugins-\w(\w+|-)+\w==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)('|")
         replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
         with: "{{ .python_plugins_version }}"
         must_include:
