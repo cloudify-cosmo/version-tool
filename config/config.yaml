@@ -34,7 +34,7 @@ paths:
            #- "install_requires"
 
 
--   type: blueprint.yaml
+    -   type: blueprint.yaml
         path: cloudify-.*
         #base_directory: version_control/tests/resources/
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w\d+)?)/.+\.yaml
