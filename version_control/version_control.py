@@ -93,31 +93,30 @@ def execute(plugins_version, core_version,
     if prerelease:
         version_version = '{0}-{1}'.format(
             core_version if core_version.count('.') == '2'
-            else core_version + '.0',
-            prerelease)
+            else core_version + '.0', prerelease)
         python_plugins_version = '{0}{1}'.format(
             plugins_version, prerelease).replace('m', 'a').replace('rc', 'c')
         python_core_version = '{0}{1}'.format(
             core_version, prerelease).replace('m', 'a').replace('rc', 'c')
-        yaml_version = '{0}{1}'.format(
+        yaml_plugins_version = '{0}{1}'.format(
             plugins_version, prerelease)
+        yaml_core_version = '{0}{1}'.format(
+            core_version, prerelease)
     else:
         version_version = core_version if core_version.count('.') == '2' \
             else core_version + '.0',
         python_plugins_version = plugins_version
         python_core_version = core_version
-        yaml_version = plugins_version
+        yaml_plugins_version = plugins_version
+        yaml_core_version = core_version
 
     # validate that the versions are matching the allowed pattern
-    # v = ValidateVersions()
-    # v.validate_version_file_version(version_version)
-    # v.validate_python_version(python_plugins_version)
-    # v.validate_python_version(python_core_version)
-    # v.validate_yaml_version(yaml_version)
-    _validate_version(version_version)
-    _validate_version(python_plugins_version)
-    _validate_version(python_core_version)
-    _validate_version(yaml_version)
+    v = ValidateVersions()
+    v.validate_version_file_version(version_version)
+    v.validate_python_version(python_plugins_version)
+    v.validate_python_version(python_core_version)
+    v.validate_yaml_version(yaml_plugins_version)
+    v.validate_yaml_version(yaml_core_version)
 
     versions = {}
 
@@ -125,13 +124,15 @@ def execute(plugins_version, core_version,
     versions['version_version'] = version_version
     versions['python_plugins_version'] = python_plugins_version
     versions['python_core_version'] = python_core_version
-    versions['yaml_version'] = yaml_version
+    versions['yaml_plugins_version'] = yaml_plugins_version
+    versions['yaml_core_version'] = yaml_core_version
     variables.update(versions)
 
     print 'version_version:' + variables['version_version']
     print 'python_plugins_version:' + variables['python_plugins_version']
     print 'python_core_version:' + variables['python_core_version']
-    print 'yaml_version:' + variables['yaml_version']
+    print 'yaml_plugins_version:' + variables['yaml_plugins_version']
+    print 'yaml_core_version:' + variables['yaml_core_version']
 
     paths = config.get('paths')
     if not paths:
@@ -145,15 +146,6 @@ def execute(plugins_version, core_version,
             files = get_all_files(
                 p['type'], p['path'], base_dir, p.get('excluded', []), verbose)
             for f in files:
-                # apply a version change according to the type of
-                # repo we're dealing with.
-                if re.search('cloudify-.*-plugin', f):
-                    versions['python_version'] = python_plugins_version
-                elif re.search('cloudify-.*-provider', f):
-                    versions['python_version'] = python_plugins_version
-                elif re.search('cloudify-.*', f):
-                    versions['python_version'] = python_core_version
-                variables.update(versions)
                 p['path'] = f
                 p['base_directory'] = base_dir
                 handle_file(p, variables, verbose=verbose)
