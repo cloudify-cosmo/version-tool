@@ -36,6 +36,13 @@ paths:
         replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
         with: "{{ .python_plugins_version }}"
 
+    -   description: handles provider dependencies in all repositories
+        type: setup.py
+        path: cloudify-.*
+        match: ('|")cloudify-.*-provider==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)('|")
+        replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
+        with: "{{ .python_plugins_version }}"
+
     -   description: handles the cli dependency in all repositories
         type: setup.py
         path: cloudify-.*

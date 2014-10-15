@@ -22,7 +22,7 @@ import version_control.version_control as vc
 import filecmp
 
 TEST_DIR = 'version_control/tests'
-TEST_RESOURCES_DIR = os.path.join(TEST_DIR, 'resources')
+TEST_RESOURCES_DIR = os.path.join(TEST_DIR, 'resources/')
 DEF_CONFIG_YAML = os.path.join(TEST_RESOURCES_DIR, 'config.yaml')
 EMPTY_CONFIG = os.path.join(TEST_RESOURCES_DIR, 'no_paths_config.yaml')
 SINGLE_FILE_CONFIG = os.path.join(
@@ -35,24 +35,25 @@ class TestBase(testtools.TestCase):
 
         test_dirs = os.listdir(TEST_RESOURCES_DIR)
 
-        for test_file in test_dirs:
-            if os.path.isdir(os.path.join(TEST_RESOURCES_DIR, test_file)) \
-                    and test_file.startswith('cloudify-'):
-                print test_file
+        for test_dir in test_dirs:
+            if os.path.isdir(os.path.join(TEST_RESOURCES_DIR, test_dir)) \
+                    and test_dir.startswith('cloudify-'):
+                print test_dir
 
-                input_dir = TEST_RESOURCES_DIR + test_file + '/input'
-                working_dir = TEST_RESOURCES_DIR + test_file + '/work-copy'
+                input = TEST_RESOURCES_DIR + test_dir + '/input'
+                working_dir = TEST_RESOURCES_DIR + test_dir + '/work-copy'
                 expected_output = \
-                    TEST_RESOURCES_DIR + test_file + '/expected-output'
+                    TEST_RESOURCES_DIR + test_dir + '/expected-output'
 
-                if not os.path.exists(input_dir):
+                if not os.path.exists(input):
                     continue
 
                 shutil.rmtree(working_dir, ignore_errors=True)
 
                 # Copy the input because the files will be changed in place
-                shutil.copytree(input_dir, working_dir)
-                vc.execute("1.1", "3.1", DEF_CONFIG_YAML,
+                shutil.copytree(input, working_dir)
+                vc.execute("1.1", "3.1",
+                           TEST_RESOURCES_DIR + 'config.yaml',
                            working_dir, 'm6', verbose=True)
                 res = filecmp.dircmp(working_dir, expected_output)
 
@@ -94,11 +95,13 @@ class TestBase(testtools.TestCase):
         vc.execute("1.1", "3.1", SINGLE_FILE_CONFIG,
                    'version_control/tests/resources', 'm6', verbose=True)
         with open(os.path.join(working_dir + '/check_changed/VERSION')) as f:
-            self.assertIn('3.1.0-m6', f.read())
-            self.assertNotIn('3.1.0-m5', f.read())
+            content = f.read()
+            self.assertIn('3.1.0-m6', content)
+            self.assertNotIn('3.1.0-m5', content)
         with open(os.path.join(working_dir + '/check_unchanged/VERSION')) as f:
-            self.assertIn('3.1.0-m5', f.read())
-            self.assertNotIn('3.1.0-m6', f.read())
+            content = f.read()
+            self.assertIn('3.1.0-m5', content)
+            self.assertNotIn('3.1.0-m6', content)
 
     def test_no_paths_key_in_config(self):
         ex = self.assertRaises(

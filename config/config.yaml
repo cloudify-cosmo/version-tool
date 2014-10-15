@@ -36,6 +36,13 @@ paths:
         replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
         with: "{{ .python_plugins_version }}"
 
+    -   description: handles provider dependencies in all repositories
+        type: setup.py
+        path: cloudify-.*
+        match: ('|")cloudify-.*-provider==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)('|")
+        replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
+        with: "{{ .python_plugins_version }}"
+
     -   description: handles the cli dependency in all repositories
         type: setup.py
         path: cloudify-.*
@@ -77,13 +84,13 @@ paths:
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
         with: "{{ .yaml_plugins_version }}"
-        
+
     -   description: handles plugin dependencies
         type: blueprint.yaml
         path: cloudify-plugins-common/cloudify/tests/resources/blueprints/execute_operation.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
-        with: "{{ .yaml_core_version }}" 
+        with: "{{ .yaml_core_version }}"
 
     # -   type: plugin.yaml
     #     path: cloudify-.*
