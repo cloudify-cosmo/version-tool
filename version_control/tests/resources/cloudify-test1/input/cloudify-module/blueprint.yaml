@@ -9,7 +9,9 @@
 tosca_definitions_version: cloudify_dsl_1_0
 
 imports:
-    - http://www.getcloudify.org/spec/cloudify/1.1m6/types.yaml
+    - http://www.getcloudify.org/spec/cloudify/3.1m5/types.yaml
+    - http://www.getcloudify.org/spec/openstack-plugin/1.0/plugin.yaml
+    - http://www.getcloudify.org/spec/fabric-plugin/1.1/plugin.yaml
     - cloudify-test-plugin/plugin.yaml
 
 node_templates:

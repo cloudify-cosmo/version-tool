@@ -1,7 +1,4 @@
-from repex.repex import import_config
-from repex.repex import RepexError
-from repex.repex import handle_file
-from repex.repex import get_all_files
+import repex.repex as rpx
 import os
 import re
 import sys
@@ -35,35 +32,35 @@ class ValidateFiles():
 
 
 class ValidateVersions():
-    def validate_python_version(self, version):
-        pattern = '\d\.\d(\.\d)?((rc|b|c|a)\d+)?$'
+
+    def validate(self, pattern, version, vtype):
         m = re.match(pattern, version)
         if not m:
-            sys.exit('illegal python version: {0}'.format(version))
+            sys.exit('illegal version ({0}): {1}'.format(vtype, version))
+
+    def validate_python_version(self, version):
+        pattern = '\d\.\d(\.\d)?((rc|b|c|a)\d+)?$'
+        self.validate(pattern, version, 'python')
 
     def validate_version_file_version(self, version):
         pattern = '\d\.\d\.\d(-(m|rc)\d+)?$'
-        m = re.match(pattern, version)
-        if not m:
-            sys.exit('illegal VERSION file version: {0}'.format(version))
+        self.validate(pattern, version, 'VERSION')
 
     def validate_yaml_version(self, version):
         pattern = '\d\.\d(\.\d)?((rc|m|)\d+)?$'
-        m = re.match(pattern, version)
-        if not m:
-            sys.exit('illegal yaml version: {0}'.format(version))
+        self.validate(pattern, version, 'yaml')
 
 
-def do_validate_files(p):
+def do_validate_files(file_type, f):
     validate = ValidateFiles()
-    if p['type'] == 'blueprint.yaml':
-        validate.blueprintyaml(p['path'])
-    elif p['type'] == 'setup.py':
-        validate.setuppy(p['path'])
-    elif p['type'] == 'VERSION':
-        validate.ver(p['path'])
-    elif p['type'] == 'plugin.yaml':
-        validate.pluginyaml(p['path'])
+    if file_type == 'blueprint.yaml':
+        validate.blueprintyaml(f)
+    elif file_type == 'setup.py':
+        validate.setuppy(f)
+    elif file_type == 'VERSION':
+        validate.ver(f)
+    elif file_type == 'plugin.yaml':
+        validate.pluginyaml(f)
 
 
 def _validate_version(version):
@@ -86,7 +83,10 @@ def _validate_version(version):
 def execute(plugins_version, core_version,
             configf, base_dir, prerelease=None,
             validate=True, verbose=False):
-    config = import_config(os.path.expanduser(configf))
+    config = rpx.import_config(os.path.expanduser(configf))
+    paths = config.get('paths')
+    if not paths:
+        raise VCError('no paths configured in config yaml')
     variables = config.get('variables', {})
 
     # if it's a prerelease, restructure the version pattern
@@ -134,20 +134,22 @@ def execute(plugins_version, core_version,
     print 'yaml_plugins_version:' + variables['yaml_plugins_version']
     print 'yaml_core_version:' + variables['yaml_core_version']
 
-    paths = config.get('paths')
-    if not paths:
-        raise RepexError('no paths configured in config yaml')
     for p in paths:
-        if os.path.isfile(p['path']):
-            handle_file(p, variables, verbose=verbose)
+        p['base_directory'] = base_dir
+        if os.path.isfile(os.path.join(p['base_directory'], p['path'])):
+            p['path'] = os.path.join(p['base_directory'], p['path'])
+            rpx.handle_file(p, variables, verbose=verbose)
             if validate:
-                do_validate_files(p)
+                do_validate_files(p['type'], p['path'])
         else:
-            files = get_all_files(
+            files = rpx.get_all_files(
                 p['type'], p['path'], base_dir, p.get('excluded', []), verbose)
             for f in files:
                 p['path'] = f
-                p['base_directory'] = base_dir
-                handle_file(p, variables, verbose=verbose)
+                rpx.handle_file(p, variables, verbose=verbose)
                 if validate:
-                    do_validate_files(p)
+                    do_validate_files(p['type'], f)
+
+
+class VCError(Exception):
+    pass

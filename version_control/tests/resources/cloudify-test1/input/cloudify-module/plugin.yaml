@@ -5,4 +5,4 @@ plugins:
     fabric:
         derived_from: cloudify.plugins.manager_plugin
         properties:
-            source: https://github.com/cloudify-cosmo/cloudify-fabric-plugin/archive/1.1m6.zip
+            source: https://github.com/cloudify-cosmo/cloudify-fabric-plugin/archive/1.1m4.zip

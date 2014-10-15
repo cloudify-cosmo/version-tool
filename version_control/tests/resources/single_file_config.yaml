@@ -1,0 +1,7 @@
+paths:
+    -   description: handles VERSION files
+        type: VERSION
+        path: single-file/check_changed/VERSION
+        match: '"version": "\d+(\.\d+){1,2}(-m\d+)?"'
+        replace: \d+(\.\d+){1,2}(-m\d+)?
+        with: "{{ .version_version }}"
