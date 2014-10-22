@@ -21,7 +21,7 @@ LOGGER = {
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "file",
             "level": "DEBUG",
-            "filename": os.path.expanduser("~/.repex/repex.log"),
+            "filename": os.path.expanduser("~/.vtool/vtool.log"),
             "maxBytes": "5000000",
             "backupCount": "20"
         },

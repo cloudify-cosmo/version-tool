@@ -15,6 +15,8 @@ Currently, it will be used to update the following:
     - versions of plugin dependencies
 - dev-requirements files
 - blueprint.yaml files
+    - versions of the core dependencies
+    - versions of the plugin dependencies
 - plugin.yaml files
 - VERSION files
 - Documentation

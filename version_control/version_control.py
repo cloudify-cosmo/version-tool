@@ -2,8 +2,11 @@ import repex.repex as rpx
 import os
 import re
 import sys
+import logger
 # from dsl_parser.parser import parse_from_path
 # from dsl_parser.parser import DSLParsingException
+
+lgr = logger.init()
 
 
 class ValidateFiles():
@@ -128,12 +131,15 @@ def execute(plugins_version, core_version,
     versions['yaml_core_version'] = yaml_core_version
     variables.update(versions)
 
-    print 'version_version:' + variables['version_version']
-    print 'python_plugins_version:' + variables['python_plugins_version']
-    print 'python_core_version:' + variables['python_core_version']
-    print 'yaml_plugins_version:' + variables['yaml_plugins_version']
-    print 'yaml_core_version:' + variables['yaml_core_version']
+    lgr.info('version_version:' + variables['version_version'])
+    lgr.info('python_plugins_version:' + variables['python_plugins_version'])
+    lgr.info('python_core_version:' + variables['python_core_version'])
+    lgr.info('yaml_plugins_version:' + variables['yaml_plugins_version'])
+    lgr.info('yaml_core_version:' + variables['yaml_core_version'])
 
+    # the reason for using the handle_file method instead of handle_path is
+    # that we want to be able to run the do_validate function on every file
+    # after it is processed.
     for p in paths:
         p['base_directory'] = base_dir
         if os.path.isfile(os.path.join(p['base_directory'], p['path'])):
@@ -141,7 +147,9 @@ def execute(plugins_version, core_version,
             rpx.handle_file(p, variables, verbose=verbose)
             if validate:
                 do_validate_files(p['type'], p['path'])
-        else:
+        # elif os.path.isdir(os.path.join(p['base_directory'], p['path'])):
+        elif any(re.search(
+                p['path'], obj) for obj in os.listdir(p['base_directory'])):
             files = rpx.get_all_files(
                 p['type'], p['path'], base_dir, p.get('excluded', []), verbose)
             for f in files:
@@ -149,6 +157,8 @@ def execute(plugins_version, core_version,
                 rpx.handle_file(p, variables, verbose=verbose)
                 if validate:
                     do_validate_files(p['type'], f)
+        else:
+            lgr.error('path does not exist: {0}'.format(p['path']))
 
 
 class VCError(Exception):

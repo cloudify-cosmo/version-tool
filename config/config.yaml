@@ -304,7 +304,7 @@ paths:
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
         with: "{{ .yaml_plugins_version }}"
-    
+
     -   description: handles core requirements
         type: dev-requirements.txt
         path: cloudify-manager-blueprints/openstack/requirements.txt
@@ -318,7 +318,7 @@ paths:
         match: https\://github\.com/cloudify-cosmo/cloudify-.*-plugin.*#egg=cloudify-.+==.*
         replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
         with: "{{ .python_plugins_version }}"
-    
+
     -   description: handles core requirements
         type: dev-requirements.txt
         path: cloudify-manager-blueprints/simple/requirements.txt
