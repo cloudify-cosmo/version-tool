@@ -95,9 +95,9 @@ def execute(plugins_version, core_version,
             core_version if core_version.count('.') == '2'
             else core_version + '.0', prerelease)
         python_plugins_version = '{0}{1}'.format(
-            plugins_version, prerelease).replace('m', 'a').replace('rc', 'c')
+            plugins_version, prerelease).replace('m', 'a')
         python_core_version = '{0}{1}'.format(
-            core_version, prerelease).replace('m', 'a').replace('rc', 'c')
+            core_version, prerelease).replace('m', 'a')
         yaml_plugins_version = '{0}{1}'.format(
             plugins_version, prerelease)
         yaml_core_version = '{0}{1}'.format(
