@@ -53,8 +53,8 @@ paths:
     -   description: handles VERSION files
         type: VERSION
         path: cloudify-.*
-        match: '"version": "\d+(\.\d+){1,2}(-m\d+)?"'
-        replace: \d+(\.\d+){1,2}(-m\d+)?
+        match: '"version": "\d+(\.\d+){1,2}(-(m|rc)\d+)?"'
+        replace: \d+(\.\d+){1,2}(-(m|rc)\d+)?
         with: "{{ .version_version }}"
 
     -   description: handles core requirements
@@ -378,8 +378,8 @@ paths:
     -   description: handles VERSION files
         type: VERSION
         path: cosmo-ui/VERSION
-        match: '"version": "\d+(\.\d+){1,2}(-m\d+)?"'
-        replace: \d+(\.\d+){1,2}(-m\d+)?
+        match: '"version": "\d+(\.\d+){1,2}(-(m|rc)\d+)?"'
+        replace: \d+(\.\d+){1,2}(-(m|rc)\d+)?
         with: "{{ .version_version }}"
 
 
