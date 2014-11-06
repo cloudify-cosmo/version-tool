@@ -374,13 +374,13 @@ paths:
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
-        
-    -   description: handles core dependencies
-        type: setup.py
+      
+    -   description: handles VERSION files
+        type: VERSION
         path: cosmo-ui/VERSION
-        match: version=('|")(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)('|")
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_core_version }}"
+        match: '"version": "\d+(\.\d+){1,2}(-m\d+)?"'
+        replace: \d+(\.\d+){1,2}(-m\d+)?
+        with: "{{ .version_version }}"
 
 
     # -   type: plugin.yaml
