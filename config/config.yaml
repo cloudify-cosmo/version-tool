@@ -85,15 +85,7 @@ paths:
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
 
-    -   description: handles plugin dependencies
-        type: blueprint.yaml
-        path: cloudify-plugins-common/cloudify/tests/resources/blueprints/execute_operation.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_core_version }}"
-
-
-
+    #Separate files list   
     -   description: handles core dependencies
         type: blueprint.yaml
         path: cloudify-system-tests/cosmo_tester/resources/blueprints/windows/blueprint.yaml
