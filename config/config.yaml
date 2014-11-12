@@ -338,6 +338,20 @@ paths:
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
+        
+    -   description: handles core dependencies
+        type: blueprint.yaml
+        path: cloudify-plugins-common/cloudify/tests/resources/blueprints/not_exists_op_workflow.yaml
+        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
+        with: "{{ .yaml_core_version }}"
+
+    -   description: handles plugin dependencies
+        type: blueprint.yaml
+        path: cloudify-plugins-common/cloudify/tests/resources/blueprints/not_exists_op_workflow.yaml
+        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
+        with: "{{ .yaml_plugins_version }}"
     
     -   description: handles core dependencies
         type: blueprint.yaml
