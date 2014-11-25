@@ -42,15 +42,15 @@ class ValidateVersions():
             sys.exit('illegal version ({0}): {1}'.format(vtype, version))
 
     def validate_python_version(self, version):
-        pattern = '\d\.\d(\.\d)?((rc|ga|b|c|a)(\d+)?)?$'
+        pattern = '\d\.\d(\.\d)?((rc|b|c|a)(\d+)?)?$'
         self.validate(pattern, version, 'python')
 
     def validate_version_file_version(self, version):
-        pattern = '\d\.\d\.\d(-(m|rc|ga)(\d+)?)?$'
+        pattern = '\d\.\d\.\d(-(m|rc)(\d+)?)?$'
         self.validate(pattern, version, 'VERSION')
 
     def validate_yaml_version(self, version):
-        pattern = '\d\.\d(\.\d)?((m|rc|ga)(\d+)?)?$'
+        pattern = '\d\.\d(\.\d)?((m|rc)(\d+)?)?$'
         self.validate(pattern, version, 'yaml')
 
 
@@ -77,7 +77,7 @@ def _validate_version(version):
     3.1-b1
     3.0.1
     """
-    pattern = '\d\.\d(\.\d)?(-)?((ga|rc|m|b|c|a)\d+)?$'
+    pattern = '\d\.\d(\.\d)?(-)?((rc|m|b|c|a)\d+)?$'
     m = re.match(pattern, version)
     if not m:
         sys.exit('illegal version: {0}'.format(version))
@@ -107,11 +107,17 @@ def execute(plugins_version, core_version,
             core_version, prerelease)
     else:
         version_version = core_version if core_version.count('.') == '2' \
-            else core_version + '.0',
+            else core_version + '.0'
         python_plugins_version = plugins_version
         python_core_version = core_version
         yaml_plugins_version = plugins_version
         yaml_core_version = core_version
+
+    lgr.info('version_version:' + version_version)
+    lgr.info('python_plugins_version:' + python_plugins_version)
+    lgr.info('python_core_version:' + python_core_version)
+    lgr.info('yaml_plugins_version:' + yaml_plugins_version)
+    lgr.info('yaml_core_version:' + yaml_core_version)
 
     # validate that the versions are matching the allowed pattern
     v = ValidateVersions()
@@ -130,12 +136,6 @@ def execute(plugins_version, core_version,
     versions['yaml_plugins_version'] = yaml_plugins_version
     versions['yaml_core_version'] = yaml_core_version
     variables.update(versions)
-
-    lgr.info('version_version:' + variables['version_version'])
-    lgr.info('python_plugins_version:' + variables['python_plugins_version'])
-    lgr.info('python_core_version:' + variables['python_core_version'])
-    lgr.info('yaml_plugins_version:' + variables['yaml_plugins_version'])
-    lgr.info('yaml_core_version:' + variables['yaml_core_version'])
 
     # the reason for using the handle_file method instead of handle_path is
     # that we want to be able to run the do_validate function on every file
