@@ -1,0 +1,15 @@
+paths:
+
+    -   description: handles core requirements
+        type: dev-requirements.txt
+        path: cloudify.*
+        match: 'https\://github\.com/cloudify-cosmo/cloudify-.+\@master\#egg=cloudify-.+==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'
+        replace: '\@master\#'
+        with: "@{{ .python_core_version }}#"
+
+    -   description: handles plugin requirements
+        type: dev-requirements.txt
+        path: cloudify.*
+        match: 'https\://github\.com/cloudify-cosmo/cloudify-.*-plugin.*#egg=cloudify-.+==.*'
+        replace: '\@{{ .python_core_version }}\#'
+        with: "@{{ .python_plugins_version }}#"
