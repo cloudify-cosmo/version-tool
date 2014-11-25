@@ -39,15 +39,15 @@ class ValidateVersions():
             sys.exit('illegal version ({0}): {1}'.format(vtype, version))
 
     def validate_python_version(self, version):
-        pattern = '\d\.\d(\.\d)?((rc|b|c|a)\d+)?$'
+        pattern = '\d\.\d(\.\d)?((rc|ga|b|c|a)\d+)?$'
         self.validate(pattern, version, 'python')
 
     def validate_version_file_version(self, version):
-        pattern = '\d\.\d\.\d(-(m|rc)\d+)?$'
+        pattern = '\d\.\d\.\d(-(m|rc|ga)\d+)?$'
         self.validate(pattern, version, 'VERSION')
 
     def validate_yaml_version(self, version):
-        pattern = '\d\.\d(\.\d)?((rc|m|)\d+)?$'
+        pattern = '\d\.\d(\.\d)?((m|rc|ga)\d+)?$'
         self.validate(pattern, version, 'yaml')
 
 
@@ -74,7 +74,7 @@ def _validate_version(version):
     3.1-b1
     3.0.1
     """
-    pattern = '\d\.\d(\.\d)?(-)?((rc|m|b|c|a)\d+)?$'
+    pattern = '\d\.\d(\.\d)?(-)?((ga|rc|m|b|c|a)\d+)?$'
     m = re.match(pattern, version)
     if not m:
         sys.exit('illegal version: {0}'.format(version))
