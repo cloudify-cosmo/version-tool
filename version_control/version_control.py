@@ -66,23 +66,6 @@ def do_validate_files(file_type, f):
         validate.pluginyaml(f)
 
 
-def _validate_version(version):
-    """
-    Validates Cloudify and plugins versions.
-    Supported formats:
-    3.0-m1
-    3.0.1-m1
-    3.1-rc1
-    3.1
-    3.1-b1
-    3.0.1
-    """
-    pattern = '\d\.\d(\.\d)?(-)?((rc|m|b|c|a)\d+)?$'
-    m = re.match(pattern, version)
-    if not m:
-        sys.exit('illegal version: {0}'.format(version))
-
-
 def execute(plugins_version, core_version,
             configf, base_dir, prerelease=None,
             validate=True, verbose=False):
