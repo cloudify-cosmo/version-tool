@@ -124,6 +124,12 @@ def execute(plugins_version, core_version,
     # that we want to be able to run the do_validate function on every file
     # after it is processed.
     for p in paths:
+        variables = variables if variables else {}
+        if type(variables) is not dict:
+            raise RuntimeError('variables must be of type dict')
+        var_expander = rpx.VarHandler(p)
+        p = var_expander.expand(variables)
+
         p['base_directory'] = base_dir
         if os.path.isfile(os.path.join(p['base_directory'], p['path'])):
             p['path'] = os.path.join(p['base_directory'], p['path'])
