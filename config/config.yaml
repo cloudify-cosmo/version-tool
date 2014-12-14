@@ -404,14 +404,14 @@ paths:
 
     -   description: handles core requirements
         type: dev-requirements.txt
-        path: cloudify-cosmo/cloudify-cloudstack-plugin/edit/master/plugin.yaml.template
+        path: cloudify-cloudstack-plugin/plugin.yaml.template
         match: https\://github\.com/cloudify-cosmo/cloudify-.+#egg=cloudify-.+==(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .python_core_version }}"
 
     -   description: handles plugin requirements
         type: dev-requirements.txt
-        path: cloudify-cosmo/cloudify-cloudstack-plugin/edit/master/plugin.yaml.template
+        path: cloudify-cloudstack-plugin/plugin.yaml.template
         match: https\://github\.com/cloudify-cosmo/cloudify-.*-plugin.*#egg=cloudify-.+==.*
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .python_plugins_version }}"
