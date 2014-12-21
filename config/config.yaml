@@ -415,6 +415,13 @@ paths:
         match: https\://github\.com/cloudify-cosmo/cloudify-.*-plugin.*#egg=cloudify-.+==.*
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .python_plugins_version }}"
+        
+    -   description: handles plugin yaml branch updates
+        type: plugin.yaml
+        path: cloudify-.*-plugin
+        match: https://github.com/cloudify-cosmo/cloudify-.*-plugin/archive/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?).zip
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
+        with: "{{ .yaml_plugins_version }}"
 
     # -   type: plugin.yaml
     #     path: cloudify-.*
