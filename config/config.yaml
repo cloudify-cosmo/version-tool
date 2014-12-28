@@ -1,5 +1,5 @@
 paths:
-    -   description: handles module version in all core repositories
+    -   description: handles core modules version in all core repositories
         type: setup.py
         path: cloudify-.*
         excluded:
@@ -8,14 +8,14 @@ paths:
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .python_core_version }}"
 
-    -   description: handles module version in all plugin repositories
+    -   description: handles plugin modules version in all plugin repositories
         type: setup.py
         path: cloudify-.*-plugin
         match: version=('|")(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)('|")
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .python_plugins_version }}"
 
-    -   description: handles module version in all provider repositories
+    -   description: handles provider modules version in all provider repositories
         type: setup.py
         path: cloudify-.*-provider
         match: version=('|")(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)('|")
@@ -50,7 +50,7 @@ paths:
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .python_core_version }}"
 
-    -   description: handles VERSION files
+    -   description: handles the UI VERSION file
         type: VERSION
         path: cosmo-ui/VERSION
         match: '"version": "\d+(\.\d+){1,2}(-(m|rc)(\d+)?)?"'
@@ -78,21 +78,21 @@ paths:
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .python_plugins_version }}"
 
-    -   description: handles core dependencies
+    -   description: handles core dependencies in blueprint files
         type: (.*-)?blueprint.yaml
         path: cloudify-.*
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_core_version }}"
 
-    -   description: handles plugin dependencies
+    -   description: handles plugin dependencies in blueprint files
         type: (.*-)?blueprint.yaml
         path: cloudify-.*
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
 
-    -   description: handles plugin yaml branch updates
+    -   description: handles plugin yaml files
         type: plugin.yaml
         path: cloudify-.*-plugin
         match: https://github.com/cloudify-cosmo/cloudify-.*-plugin/archive/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?).zip
@@ -154,34 +154,6 @@ paths:
     -   description: handles plugin dependencies
         type: blueprint.yaml
         path: cloudify-plugins-common/cloudify/tests/resources/blueprints/not_exist_op_workflow.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_plugins_version }}"
-
-    -   description: handles core dependencies
-        type: blueprint.yaml
-        path: cloudify-nodecellar-example/openstack-blueprint.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_core_version }}"
-
-    -   description: handles plugin dependencies
-        type: blueprint.yaml
-        path: cloudify-nodecellar-example/openstack-blueprint.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_plugins_version }}"
-
-    -   description: handles core dependencies
-        type: blueprint.yaml
-        path: cloudify-nodecellar-example/ec2-blueprint.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_core_version }}"
-
-    -   description: handles plugin dependencies
-        type: blueprint.yaml
-        path: cloudify-nodecellar-example/ec2-blueprint.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
