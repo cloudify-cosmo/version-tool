@@ -136,9 +136,7 @@ def execute(plugins_version, core_version,
             rpx.handle_file(p, variables, verbose=verbose)
             if validate:
                 do_validate_files(p['type'], p['path'])
-        # elif os.path.isdir(os.path.join(p['base_directory'], p['path'])):
-        elif any(re.search(
-                p['path'], obj) for obj in os.listdir(p['base_directory'])):
+        elif os.path.isdir(os.path.join(p['base_directory'], p['path'])):
             files = rpx.get_all_files(
                 p['type'], p['path'], base_dir, p.get('excluded', []), verbose)
             for f in files:
@@ -146,8 +144,6 @@ def execute(plugins_version, core_version,
                 rpx.handle_file(p, variables, verbose=verbose)
                 if validate:
                     do_validate_files(p['type'], f)
-        else:
-            lgr.error('path does not exist: {0}'.format(p['path']))
 
 
 class VCError(Exception):
