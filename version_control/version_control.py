@@ -127,8 +127,8 @@ def execute(plugins_version, core_version,
         variables = variables if variables else {}
         if type(variables) is not dict:
             raise RuntimeError('variables must be of type dict')
-        var_expander = rpx.VarHandler(p)
-        p = var_expander.expand(variables)
+        var_expander = rpx.VarHandler(verbose)
+        p = var_expander.expand(variables, p)
 
         p['base_directory'] = base_dir
         if os.path.isfile(os.path.join(p['base_directory'], p['path'])):
