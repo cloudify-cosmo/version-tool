@@ -136,7 +136,7 @@ def execute(plugins_version, core_version,
             rpx.handle_file(p, variables, verbose=verbose)
             if validate:
                 do_validate_files(p['type'], p['path'])
-        elif os.path.isdir(os.path.join(p['base_directory'], p['path'])):
+        else:
             files = rpx.get_all_files(
                 p['type'], p['path'], base_dir, p.get('excluded', []), verbose)
             for f in files:
