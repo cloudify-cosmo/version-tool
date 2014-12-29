@@ -1,2 +1,1 @@
--e git+https://github.com/cloudify-cosmo/repex@master#egg=repex==0.0.1
 -e git+https://github.com/cloudify-cosmo/cloudify-dsl-parser@master#egg=cloudify-dsl-parser==3.1a5
