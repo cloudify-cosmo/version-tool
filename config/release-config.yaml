@@ -13,3 +13,34 @@ paths:
         match: 'https\://github\.com/cloudify-cosmo/cloudify-.*-plugin.*#egg=cloudify-.+==.*'
         replace: '\@{{ .python_core_version }}\#'
         with: "@{{ .python_plugins_version }}#"
+    
+    -   description: handles core requirements
+        type: blueprint.yaml
+        path: cloudify-packager/docker/vars.py
+        match: '"cloudify_.+": "git\+git://github\.com/cloudify-cosmo/cloudify-.+\@master",'
+        replace: '\@master'
+        with: "@{{ .python_core_version }}"
+
+    -   description: handles plugin requirements
+        type: blueprint.yaml
+        path: cloudify-packager/docker/vars.py
+        match: '"cloudify_.+": "git\+git://github\.com/cloudify-cosmo/cloudify-.*-plugin.*"'
+        replace: '\@{{ .python_core_version }}'
+        with: "@{{ .python_plugins_version }}"
+
+
+    -   description: handles core requirements
+        type: blueprint.yaml
+        path: cloudify-packager/docker/vars.py
+        match: '-b master https://github\.com/cloudify-cosmo/cloudify-.+.git'
+        replace: '-b master'
+        with: "-b {{ .python_core_version }}"
+
+    -   decription: handles core requirements
+        type: dev-requirements.txt
+        path: cloudify-packager/docker/vars.py
+        match: 'https://raw.githubusercontent.com/cloudify-cosmo/cloudify-manager/master/plugins/riemann-controller/riemann_controller/resources/manager.config'
+        replace: '\/master\/'
+        with: "/{{ .python_core_version }}/"
+
+        
