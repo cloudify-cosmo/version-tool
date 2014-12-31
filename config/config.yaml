@@ -171,3 +171,17 @@ paths:
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
+
+    -   description: handles blueprint core dependencies
+        type: .travis.yml
+        path: cloudify-nodecellar-example/.travis.yml
+        match: https://github.com/cloudify-cosmo/cloudify-.*/archive/.*.zip
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
+        with: "{{ .yaml_core_version }}"
+
+    -   description: handles blueprint plugin dependencies
+        type: .travis.yml
+        path: cloudify-nodecellar-example/.travis.yml
+        match: https://github.com/cloudify-cosmo/cloudify-.*-plugin/archive/.*.zip
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
+        with: "{{ .yaml_plugins_version }}"
