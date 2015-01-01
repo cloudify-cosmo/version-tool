@@ -11,7 +11,7 @@ paths:
         type: dev-requirements.txt
         path: cloudify.*
         match: 'https\://github\.com/cloudify-cosmo/cloudify-.*-plugin.*#egg=cloudify-.+==.*'
-        replace: '\@{{ .python_core_version }}\#'
+        replace: '\@{{ .yaml_core_version }}\#'
         with: "@{{ .yaml_plugins_version }}#"
 
     -   description: handles core requirements
@@ -25,7 +25,7 @@ paths:
         type: vars.py
         path: cloudify-packager/docker/vars.py
         match: '"cloudify_.+": "git\+git://github\.com/cloudify-cosmo/cloudify-.*-plugin.*"'
-        replace: '\@{{ .python_core_version }}'
+        replace: '\@{{ .yaml_core_version }}'
         with: "@{{ .yaml_plugins_version }}"
 
 
