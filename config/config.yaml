@@ -1,19 +1,18 @@
 paths:
-    -   description: handles core modules version in all core repositories
-        type: setup.py
-        path: cloudify-.*
-        excluded:
-          - cloudify-plugin-template
-        match: version=('|")(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)('|")
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .python_core_version }}"
+    -   description: handles core requirements
+        type: dev-requirements.txt
+        path: cloudify.*
+        match: 'https\://github\.com/cloudify-cosmo/cloudify-.+\@{{ .python_core_version }}\#egg=cloudify-.+==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'
+        replace: '\@{{ .python_core_version }}\#'
+        with: "@{{ .yaml_core_version }}#"
 
-    -   description: handles plugin modules version in all plugin repositories
-        type: setup.py
-        path: cloudify-.*-plugin
-        match: version=('|")(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)('|")
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .python_plugins_version }}"
+    -   description: handles plugin requirements
+        type: dev-requirements.txt
+        path: cloudify.*
+        match: 'https\://github\.com/cloudify-cosmo/cloudify-.*-plugin.*#egg=cloudify-.+==.*'
+        replace: '\@{{ .python_plugins_version }}\#'
+        with: "@{{ .yaml_plugins_version }}#"
+
 
     -   description: handles provider modules version in all provider repositories
         type: setup.py
