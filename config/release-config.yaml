@@ -3,42 +3,41 @@ paths:
     -   description: handles core requirements
         type: dev-requirements.txt
         path: cloudify.*
-        match: 'https\://github\.com/cloudify-cosmo/cloudify-.+\@master\#egg=cloudify-.+==(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'
-        replace: '\@master\#'
-        with: "@{{ .yaml_core_version }}#"
+        match: 'https\://github\.com/cloudify-cosmo/cloudify-.+\@.*#egg'
+        replace: '(master|(\d+)(\.\d+){1,2}(dev|(\w\d+)?))'
+        with: "{{ .yaml_core_version }}"
 
     -   description: handles plugin requirements
         type: dev-requirements.txt
         path: cloudify.*
-        match: 'https\://github\.com/cloudify-cosmo/cloudify-.*-plugin.*#egg=cloudify-.+==.*'
-        replace: '\@{{ .yaml_core_version }}\#'
-        with: "@{{ .yaml_plugins_version }}#"
+        match: 'https\://github\.com/cloudify-cosmo/cloudify-.+-plugin\@.*#egg'
+        replace: '(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'
+        with: "{{ .yaml_plugins_version }}"
 
     -   description: handles core requirements
         type: vars.py
         path: cloudify-packager/docker/vars.py
         match: '"cloudify_.+": "git\+git://github\.com/cloudify-cosmo/cloudify-.+\@master",'
-        replace: '\@master'
+        replace: '(master|(\d+)(\.\d+){1,2}(dev|(\w\d+)?))'
         with: "@{{ .yaml_core_version }}"
 
     -   description: handles plugin requirements
         type: vars.py
         path: cloudify-packager/docker/vars.py
-        match: '"cloudify_.+": "git\+git://github\.com/cloudify-cosmo/cloudify-.*-plugin.*"'
-        replace: '\@{{ .yaml_core_version }}'
+        match: '"cloudify_.+": "git\+git://github\.com/cloudify-cosmo/cloudify-.*-plugin"'
+        replace: '(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'
         with: "@{{ .yaml_plugins_version }}"
-
 
     -   description: handles core requirements
         type: vars.py
         path: cloudify-packager/docker/vars.py
         match: '-b master https://github\.com/cloudify-cosmo/cloudify-.+.git'
-        replace: '-b master'
+        replace: '(master|(\d+)(\.\d+){1,2}(dev|(\w\d+)?))'
         with: "-b {{ .yaml_core_version }}"
 
     -   decription: handles core requirements
         type: vars.py
         path: cloudify-packager/docker/vars.py
         match: 'https://raw.githubusercontent.com/cloudify-cosmo/cloudify-manager/master/plugins/riemann-controller/riemann_controller/resources/manager.config'
-        replace: '\/master\/'
+        replace: '\/(master|(\d+)(\.\d+){1,2}(dev|(\w\d+)?))\/'
         with: "/{{ .yaml_core_version }}/"
