@@ -11,7 +11,7 @@ paths:
         type: dev-requirements.txt
         path: cloudify.*
         match: 'https\://github\.com/cloudify-cosmo/cloudify-.*-plugin.*#egg=cloudify-.+==.*'
-        replace: '\@{{ .python_plugins_version }}\#'
+        replace: '\@{{ .yaml_core_version }}\#'
         with: "@{{ .yaml_plugins_version }}#"
 
     -   description: handles core requirements
@@ -42,5 +42,3 @@ paths:
         match: 'https://raw.githubusercontent.com/cloudify-cosmo/cloudify-manager/master/plugins/riemann-controller/riemann_controller/resources/manager.config'
         replace: '\/master\/'
         with: "/{{ .yaml_core_version }}/"
-
-
