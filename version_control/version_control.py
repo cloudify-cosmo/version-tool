@@ -137,7 +137,7 @@ def execute(plugins_version, core_version,
                 p['path'] = path_to_handle
                 rpx.handle_file(p, variables, verbose=verbose)
                 if validate:
-                    do_validate_files(os.path.basename(p['path'], p['path']))
+                    do_validate_files(os.path.basename(p['path']), p['path'])
             else:
                 raise VCError('file not found: {0}'.format(path_to_handle))
         else:
