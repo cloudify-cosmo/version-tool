@@ -131,12 +131,19 @@ def execute(plugins_version, core_version,
         p = var_expander.expand(variables, p)
 
         p['base_directory'] = base_dir
-        if os.path.isfile(os.path.join(p['base_directory'], p['path'])):
-            p['path'] = os.path.join(p['base_directory'], p['path'])
-            rpx.handle_file(p, variables, verbose=verbose)
-            if validate:
-                do_validate_files(p['type'], p['path'])
+        path_to_handle = os.path.join(p['base_directory'], p['path'])
+        if not p.get('type'):
+            if os.path.isfile(path_to_handle):
+                p['path'] = path_to_handle
+                rpx.handle_file(p, variables, verbose=verbose)
+                if validate:
+                    do_validate_files(os.path.basename(p['path']), p['path'])
+            else:
+                raise VCError('file not found: {0}'.format(path_to_handle))
         else:
+            if os.path.isfile(path_to_handle):
+                raise VCError('if `type` is specified, `path` must not be a '
+                              'path to a single file.')
             files = rpx.get_all_files(
                 p['type'], p['path'], base_dir, p.get('excluded', []), verbose)
             for f in files:
