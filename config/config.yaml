@@ -103,84 +103,72 @@ paths:
     # Separate files list
 
     -   description: handles core dependencies
-        type: blueprint.yaml
         path: cloudify-manager-blueprints/openstack/openstack.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_core_version }}"
 
     -   description: handles plugin dependencies
-        type: blueprint.yaml
         path: cloudify-manager-blueprints/openstack/openstack.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
 
     -   description: handles core dependencies
-        type: blueprint.yaml
         path: cloudify-manager-blueprints/simple/simple.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_core_version }}"
 
     -   description: handles plugin dependencies
-        type: blueprint.yaml
         path: cloudify-manager-blueprints/simple/simple.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
 
     -   description: handles core dependencies
-        type: blueprint.yaml
         path: cloudify-plugins-common/cloudify/tests/resources/blueprints/execute_operation.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_core_version }}"
 
     -   description: handles plugin dependencies
-        type: blueprint.yaml
         path: cloudify-plugins-common/cloudify/tests/resources/blueprints/execute_operation.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
 
     -   description: handles core dependencies
-        type: blueprint.yaml
         path: cloudify-plugins-common/cloudify/tests/resources/blueprints/not_exist_op_workflow.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_core_version }}"
 
     -   description: handles plugin dependencies
-        type: blueprint.yaml
         path: cloudify-plugins-common/cloudify/tests/resources/blueprints/not_exist_op_workflow.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
 
     -   description: handles core dependencies
-        type: blueprint.yaml
         path: cloudify-vsphere-plugin/manager_blueprint/vsphere.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_core_version }}"
 
     -   description: handles plugin dependencies
-        type: blueprint.yaml
         path: cloudify-vsphere-plugin/manager_blueprint/vsphere.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
 
     -   description: handles blueprint core dependencies
-        type: .travis.yml
         path: cloudify-nodecellar-example/.travis.yml
         match: https://github.com/cloudify-cosmo/cloudify-.*/archive/.*.zip
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_core_version }}"
 
     -   description: handles blueprint plugin dependencies
-        type: .travis.yml
         path: cloudify-nodecellar-example/.travis.yml
         match: https://github.com/cloudify-cosmo/cloudify-.*-plugin/archive/.*.zip
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
