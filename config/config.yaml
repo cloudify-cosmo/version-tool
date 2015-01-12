@@ -200,12 +200,12 @@ paths:
         
     -   description: handles core tag
         path: cloudify-system-tests/suites/suites/suites.yaml
-        match: core_branch: '(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'
+        match: "core_branch: '(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'"
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_core_version }}"
 
     -   description: handles plugins tag
         path: cloudify-system-tests/suites/suites/suites.yaml
-        match: plugins_branch: '(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'
+        match: "plugins_branch: '(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'"
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
