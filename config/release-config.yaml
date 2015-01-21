@@ -22,7 +22,7 @@ paths:
 
     -   description: handles plugin requirements
         path: cloudify-packager/docker/vars.py
-        match: '"cloudify_.+": "git\+git://github\.com/cloudify-cosmo/cloudify-.*-plugin"'
+        match: '"cloudify_.+": "git\+git://github\.com/cloudify-cosmo/cloudify-.*-plugin.*"'
         replace: '(\d+)(\.\d+){1,2}(dev|(\w\d+)?)'
         with: "{{ .yaml_plugins_version }}"
 
