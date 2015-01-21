@@ -28,7 +28,7 @@ paths:
 
     -   description: handles core requirements
         path: cloudify-packager/docker/vars.py
-        match: 'master https://github\.com/cloudify-cosmo/cloudify-.+.git'
+        match: '-b master https://github\.com/cloudify-cosmo/cloudify-.+.git'
         replace: '(master|(\d+)(\.\d+){1,2}(dev|(\w\d+)?))'
         with: "{{ .yaml_core_version }}"
 
