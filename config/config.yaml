@@ -221,6 +221,18 @@ paths:
         match: https://github.com/cloudify-cosmo/cloudify-.*-plugin/archive/.*.zip
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
+        
+    -   description: handles blueprint core dependencies
+        path: cloudify-manager-blueprints/.travis.yml
+        match: https://github.com/cloudify-cosmo/cloudify-.*/archive/.*.zip
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
+        with: "{{ .yaml_core_version }}"
+
+    -   description: handles blueprint plugin dependencies
+        path: cloudify-manager-blueprints/.travis.yml
+        match: https://github.com/cloudify-cosmo/cloudify-.*-plugin/archive/.*.zip
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
+        with: "{{ .yaml_plugins_version }}"
 
     -   description: handles core tag
         path: cloudify-system-tests/suites/suites/suites.yaml
