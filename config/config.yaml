@@ -25,7 +25,7 @@ paths:
     -   description: handles core dependencies in all repositories
         type: setup.py
         path: cloudify-.*
-        match: ('|")cloudify-\w(\w+|-)+\w==(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)('|")
+        match: ('|")cloudify-\w(\w+|-)+\w(=|>)=(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)('|")
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .python_core_version }}"
 
