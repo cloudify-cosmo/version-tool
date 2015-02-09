@@ -28,6 +28,7 @@ setup(
         'cloudify-plugins-common==3.1b4',
         'cloudify-script-plugin==1.2a4',
         'cloudify-openstack-provider==3.1b4',
+        'cloudify-dsl-parser>=3.1b4',
         'fabric==1.8.3',
         'jinja2==2.7.2'
     ],
