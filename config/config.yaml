@@ -64,6 +64,12 @@ paths:
         replace: \d+(\.\d+){1,2}(-(m|rc)(\d+)?)?
         with: "{{ .version_version }}"
 
+    -   description: handles packages.py file which replaces the version for all agent packages
+        path: cloudify-packager/packages.py
+        match: '"version": "\d+(\.\d+){1,2}(-(m|rc)(\d+)?)?"'
+        replace: \d+(\.\d+){1,2}(-(m|rc)(\d+)?)?
+        with: "{{ .version_version }}"
+
     -   description: handles core requirements
         type: dev-requirements.txt
         path: cloudify.*
@@ -101,13 +107,13 @@ paths:
 
 
     # Separate files list
-    
+
     -   description: handles core dependencies
         path: cloudify-manager-blueprints/openstack-nova-net/openstack.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_core_version }}"
-        
+
     -   description: handles plugin dependencies
         path: cloudify-manager-blueprints/openstack-nova-net/openstack.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
@@ -197,7 +203,7 @@ paths:
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
-        
+
     -   description: handles core dependencies
         path: cloudify-manager-blueprints/softlayer/softlayer.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
@@ -221,7 +227,7 @@ paths:
         match: https://github.com/cloudify-cosmo/cloudify-.*-plugin/archive/.*.zip
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
-        
+
     -   description: handles blueprint core dependencies
         path: cloudify-manager-blueprints/.travis.yml
         match: https://github.com/cloudify-cosmo/cloudify-.*/archive/.*.zip
