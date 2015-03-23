@@ -107,7 +107,42 @@ paths:
 
 
     # Separate files list
+    -   description: handles core dependencies
+        path: cloudify-nodecellar-docker-example/blueprint/docker-vcloud-blueprint.yaml
+        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
+        with: "{{ .yaml_core_version }}"
 
+    -   description: handles plugin dependencies
+        path: cloudify-nodecellar-docker-example/blueprint/docker-vcloud-blueprint.yaml
+        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
+        with: "{{ .yaml_plugins_version }}"
+        
+    -   description: handles core dependencies
+        path: cloudify-nodecellar-docker-example/blueprint/singlehost.yaml
+        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
+        with: "{{ .yaml_core_version }}"
+
+    -   description: handles plugin dependencies
+        path: cloudify-nodecellar-docker-example/blueprint/singlehost.yaml
+        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
+        with: "{{ .yaml_plugins_version }}"
+        
+    -   description: handles core dependencies
+        path: cloudify-nodecellar-docker-example/blueprint/openstack.yaml
+        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
+        with: "{{ .yaml_core_version }}"
+
+    -   description: handles plugin dependencies
+        path: cloudify-nodecellar-docker-example/blueprint/openstack.yaml
+        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
+        with: "{{ .yaml_plugins_version }}"
+        
     -   description: handles core dependencies
         path: cloudify-manager-blueprints/openstack-nova-net/openstack.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
