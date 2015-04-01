@@ -64,8 +64,8 @@ paths:
         replace: \d+(\.\d+){1,2}(-(m|rc)(\d+)?)?
         with: "{{ .version_version }}"
 
-    -   description: handles packages.py file which replaces the version for all agent packages
-        path: cloudify-packager/packages.py
+    -   description: handles packages.yaml file which replaces the version for all agent packages
+        path: cloudify-packager/packages.yaml
         match: '"version": "\d+(\.\d+){1,2}(-(m|rc)(\d+)?)?"'
         replace: \d+(\.\d+){1,2}(-(m|rc)(\d+)?)?
         with: "{{ .version_version }}"
