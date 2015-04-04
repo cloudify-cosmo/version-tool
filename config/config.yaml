@@ -192,18 +192,6 @@ paths:
         with: "{{ .yaml_plugins_version }}"
 
     -   description: handles core dependencies
-        path: cloudify-manager-blueprints/openstack-docker/openstack-docker.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_core_version }}"
-
-    -   description: handles plugin dependencies
-        path: cloudify-manager-blueprints/openstack-docker/openstack-docker.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_plugins_version }}"
-
-    -   description: handles core dependencies
         path: cloudify-manager-blueprints/simple/simple-docker.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
