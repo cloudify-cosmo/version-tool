@@ -1,6 +1,5 @@
 Cloudify Version Control - Internal
 
-NOTE: To work with this tool, you'll have to manually install https://github.com/cloudify-cosmo/repex into your virtualenv.
 Please read the `repex` documentation before working with this tool.
 
 ### Overview
@@ -58,7 +57,7 @@ We have several version formats we need to update in different files. For instan
 - blueprint.yaml: 3.1m2
 
 Since we currently provide 2 different versions for each release - one for the core and one for plugins, it is required that these 2 are supplied separately.
-This will probably changed in the near future.
+This will probably change in the near future.
 
 Consequently, the tool receives a plugin version, a core version and a prerelease (if applicable) and performs the necessary crunching to supply the correct version format to the corresponding file type.
 
