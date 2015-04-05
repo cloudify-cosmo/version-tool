@@ -52,7 +52,7 @@ setup(
     },
     install_requires=[
         "docopt==.0.6.1",
-        "repex==0.1.0",
+        "repex==0.1.1",
     ],
     tests_require=['nose', 'tox'],
     cmdclass={'test': Tox},
