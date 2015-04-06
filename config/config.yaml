@@ -142,54 +142,6 @@ paths:
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
-        
-    -   description: handles core dependencies
-        path: cloudify-manager-blueprints/cloudstack/cloudstack.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_core_version }}"
-
-    -   description: handles plugin dependencies
-        path: cloudify-manager-blueprints/cloudstack/cloudstack.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_plugins_version }}"
-        
-    -   description: handles core dependencies
-        path: cloudify-manager-blueprints/openstack-nova-net/openstack.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_core_version }}"
-
-    -   description: handles plugin dependencies
-        path: cloudify-manager-blueprints/openstack-nova-net/openstack.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_plugins_version }}"
-
-    -   description: handles core dependencies
-        path: cloudify-manager-blueprints/openstack/openstack.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_core_version }}"
-
-    -   description: handles plugin dependencies
-        path: cloudify-manager-blueprints/openstack/openstack.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_plugins_version }}"
-
-    -   description: handles core dependencies
-        path: cloudify-manager-blueprints/simple/simple.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_core_version }}"
-
-    -   description: handles plugin dependencies
-        path: cloudify-manager-blueprints/simple/simple.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_plugins_version }}"
 
     -   description: handles core dependencies
         path: cloudify-plugins-common/cloudify/tests/resources/blueprints/execute_operation.yaml
@@ -211,30 +163,6 @@ paths:
 
     -   description: handles plugin dependencies
         path: cloudify-plugins-common/cloudify/tests/resources/blueprints/not_exist_op_workflow.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_plugins_version }}"
-
-    -   description: handles core dependencies
-        path: cloudify-vsphere-plugin/manager_blueprint/vsphere.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_core_version }}"
-
-    -   description: handles plugin dependencies
-        path: cloudify-vsphere-plugin/manager_blueprint/vsphere.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_plugins_version }}"
-
-    -   description: handles core dependencies
-        path: cloudify-manager-blueprints/softlayer/softlayer.yaml
-        match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
-        replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
-        with: "{{ .yaml_core_version }}"
-
-    -   description: handles plugin dependencies
-        path: cloudify-manager-blueprints/softlayer/softlayer.yaml
         match: http://www\.getcloudify\.org/spec/\w(\w+|-)+\w-plugin/(\d+)(\.\d+){1,2}(dev|(\w+\d+)?)/.+\.yaml
         replace: (\d+)(\.\d+){1,2}(dev|(\w+\d+)?)
         with: "{{ .yaml_plugins_version }}"
