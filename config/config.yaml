@@ -90,7 +90,7 @@ paths:
 
     -   description: handles packages.yaml file which replaces the version for all agent packages
         path: cloudify-packager/packages.yaml
-        match: '"version": "\d+(\.\d+){1,2}(-(m|rc)(\d+)?)?"'
+        match: 'version: "\d+(\.\d+){1,2}(-(m|rc)(\d+)?)?"'
         replace: \d+(\.\d+){1,2}(-(m|rc)(\d+)?)?
         with: "{{ .version_version }}"
 
