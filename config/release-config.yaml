@@ -1,16 +1,16 @@
 paths:
 
     -   description: handles core requirements
-        type: dev-requirements.txt
+        type: (dev|test)-requirements.txt
         path: cloudify.*
-        match: 'https\://github\.com/cloudify-cosmo/cloudify-.+\@.*#egg'
+        match: 'https\://github\.com/cloudify-cosmo/cloudify-.+(\@.*#egg|/archive/.*)'
         replace: '(master|(\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?))'
         with: "{{ .yaml_core_version }}"
 
     -   description: handles plugin requirements
-        type: dev-requirements.txt
+        type: (dev|test)-requirements.txt
         path: cloudify.*
-        match: 'https\://github\.com/cloudify-cosmo/cloudify-.+-plugin\@.*#egg'
+        match: 'https\://github\.com/cloudify-cosmo/cloudify-.+-plugin(\@.*#egg|/archive/.*)'
         replace: '(\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)'
         with: "{{ .yaml_plugins_version }}"
 
