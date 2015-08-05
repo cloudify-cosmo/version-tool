@@ -165,3 +165,10 @@ paths:
         match: plugins_branch. '(\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)'
         replace: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
         with: "{{ .yaml_plugins_version }}"
+
+    # Update inscript references
+    -   description: Replace inscript references in core tag
+        path: ../cloudify-manager/resources/rest-service/cloudify/types/types.yaml
+        match: cloudify-cosmo/cloudify-manager/(\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
+        with: "master"
