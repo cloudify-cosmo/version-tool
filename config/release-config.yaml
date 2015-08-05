@@ -37,3 +37,10 @@ paths:
         match: 'https://raw.githubusercontent.com/cloudify-cosmo/cloudify-manager/master/plugins/riemann-controller/riemann_controller/resources/manager.config'
         replace: '\/(master|(\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?))\/'
         with: "/{{ .yaml_core_version }}/"
+
+    # Update inscript references
+    -   description: Replace inscript references
+        path: ../cloudify-manager/resources/rest-service/cloudify/types/types.yaml
+        match: cloudify-cosmo/cloudify-manager/master
+        replace: master
+        with: "{{ .yaml_core_version }}"
