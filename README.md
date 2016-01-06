@@ -2,6 +2,8 @@ Cloudify Version Control - Internal
 
 Please read the `repex` documentation before working with this tool.
 
+* Master [![Circle CI](https://circleci.com/gh/cloudify-cosmo/version-tool/tree/master.svg?style=shield)](https://circleci.com/gh/cloudify-cosmo/version-tool/tree/master)
+
 ### Overview
 
 This is an internal tool for Cloudify to update versions in different files.
