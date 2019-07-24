@@ -101,6 +101,7 @@ def execute(plugins_version, core_version,
     lgr.info('python_core_version:' + python_core_version)
     lgr.info('yaml_plugins_version:' + yaml_plugins_version)
     lgr.info('yaml_core_version:' + yaml_core_version)
+    lgr.info('prerelease:' + prerelease)
 
     # validate that the versions are matching the allowed pattern
     v = ValidateVersions()
@@ -118,6 +119,7 @@ def execute(plugins_version, core_version,
     versions['python_core_version'] = python_core_version
     versions['yaml_plugins_version'] = yaml_plugins_version
     versions['yaml_core_version'] = yaml_core_version
+    versions['prerelease_version'] = prerelease
     variables.update(versions)
 
     # the reason for using the handle_file method instead of handle_path is
