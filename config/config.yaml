@@ -172,3 +172,17 @@ paths:
         match: plugins_branch. '(\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)'
         replace: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
         with: "{{ .yaml_plugins_version }}"
+ 
+    -   description: handles version info file which mark to manager version for the build process
+        type: version_info
+        path: cloudify-manager
+        match: export CLOUDIFY_VERSION=('|")(\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)('|")
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
+        with: "{{ .version_version }}"
+    
+    -   description: handles version info file which mark to manager version for the build process
+        type: version_info
+        path: cloudify-manager
+        match: export CLOUDIFY_PACKAGE_RELEASE=('|")(\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)('|")
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
+        with: "{{ .prerelease_version }}"
