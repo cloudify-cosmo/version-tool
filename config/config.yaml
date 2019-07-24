@@ -57,6 +57,13 @@ paths:
         replace: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
         with: "{{ .python_core_version }}"
 
+    -   description: handles core requirements
+        type: (dev|test)-requirements.txt
+        path: cloudify.*
+        match: https\://github\.com/cloudify-cosmo/cloudify-.+
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
+        with: "{{ .python_core_version }}"
+
     -   description: handles plugin requirements
         type: (dev|test)-requirements.txt
         path: cloudify.*
@@ -165,3 +172,17 @@ paths:
         match: plugins_branch. '(\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)'
         replace: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
         with: "{{ .yaml_plugins_version }}"
+ 
+    -   description: handles version info file which mark to manager version for the build process
+        type: version_info
+        path: cloudify-manager
+        match: export CLOUDIFY_VERSION=('|")(\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)('|")
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
+        with: "{{ .version_version }}"
+    
+    -   description: handles version info file which mark to manager version for the build process
+        type: version_info
+        path: cloudify-manager
+        match: export CLOUDIFY_PACKAGE_RELEASE=('|")(\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)('|")
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
+        with: "{{ .prerelease_version }}"
