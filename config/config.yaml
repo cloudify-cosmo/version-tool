@@ -57,6 +57,13 @@ paths:
         replace: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
         with: "{{ .python_core_version }}"
 
+    -   description: handles core requirements
+        type: (dev|test)-requirements.txt
+        path: cloudify.*
+        match: https\://github\.com/cloudify-cosmo/cloudify-.+
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
+        with: "{{ .python_core_version }}"
+
     -   description: handles plugin requirements
         type: (dev|test)-requirements.txt
         path: cloudify.*
