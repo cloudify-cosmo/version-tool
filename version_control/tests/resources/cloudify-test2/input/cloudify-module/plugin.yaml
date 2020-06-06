@@ -6,3 +6,4 @@ plugins:
         derived_from: cloudify.plugins.manager_plugin
         properties:
             source: https://github.com/cloudify-cosmo/cloudify-fabric-plugin/archive/11.1.1m6.zip
+            package_version: 11.1.1m6

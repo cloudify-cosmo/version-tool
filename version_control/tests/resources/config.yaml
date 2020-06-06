@@ -90,3 +90,10 @@ paths:
         match: 'source: https://github.com/cloudify-cosmo/.*/archive/.*.zip'
         replace: (\d+)(\.\d+){1,2}(dev|(\w\d+)?)
         with: "{{ .yaml_plugins_version }}"
+
+    -   description: handles plugin yaml package versions for wagon
+        type: plugin.yaml
+        path: cloudify-.*
+        match: 'package_version: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)'
+        replace: (\d+)(\.\d+){1,2}(dev|(\w+(\d+)?)?)
+        with: "{{ .python_plugins_version }}"
