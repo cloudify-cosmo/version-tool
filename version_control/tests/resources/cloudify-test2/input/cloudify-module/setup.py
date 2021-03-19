@@ -30,7 +30,7 @@ setup(
         'cloudify-openstack-provider==3.1b4',
         'cloudify-dsl-parser>=3.1b4',
         'fabric==1.8.3',
-        'jinja2==2.7.2'
+        'jinja2==2.11.3'
     ],
     tests_require=[
         "nose",
